@@ -1,0 +1,65 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZQM_O103_QUALITY_NOTIF_SRV" xml:lang="en" sap:schema-version="1">
+			<EntityType Name="ItQnotifSel" sap:content-version="1">
+				<Key><PropertyRef Name="Qmnum"/></Key><Property Name="Qmnum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Notification" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Prueflos" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Inspection Lot"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Qmart" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Notifictn Type" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Status" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Erdat" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Created on" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Maktx" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="Losmenge" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Insp. Lot Qty"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Mengeneinh" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:semantics="unit-of-measure"/><NavigationProperty Name="ItDefectsSet" Relationship="ZQM_O103_QUALITY_NOTIF_SRV.QnotifSel_Defects" FromRole="FromRole_QnotifSel_Defects"
+					ToRole="ToRole_QnotifSel_Defects"/></EntityType>
+			<EntityType Name="ItDefects" sap:content-version="1">
+				<Key><PropertyRef Name="Charg"/></Key><Property Name="Charg" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Batch" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Qmnum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Notification" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Posnr" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Item" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fegrp" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Code Group" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fecod" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Damage Code" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Txtcdfe" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Txt ProbCode"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ernam" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Created by" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Erdat" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Created on" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Erzeit" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Created At" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="ItBatchesSet" Relationship="ZQM_O103_QUALITY_NOTIF_SRV.defects_batches" FromRole="FromRole_defects_batches"
+					ToRole="ToRole_defects_batches"/></EntityType>
+			<EntityType Name="ItBatches" sap:content-version="1">
+				<Key><PropertyRef Name="Charg"/></Key><Property Name="Charg" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Batch" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Cpudt" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Entered On" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Cputm" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Entered at" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Clabs" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Unrestricted"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ceinm" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Restricted-Use"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Qmart" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Notifictn Type" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fegrp1" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Code Group1" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fecod1" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Code1" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fegrp2" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Code Group2" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Fecod2" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Code2" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<Association Name="defects_batches" sap:content-version="1"><End Type="ZQM_O103_QUALITY_NOTIF_SRV.ItDefects" Multiplicity="1" Role="FromRole_defects_batches"/><End Type="ZQM_O103_QUALITY_NOTIF_SRV.ItBatches" Multiplicity="*" Role="ToRole_defects_batches"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_defects_batches"><PropertyRef Name="Charg"/></Principal>
+					<Dependent Role="ToRole_defects_batches"><PropertyRef Name="Charg"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="QnotifSel_Defects" sap:content-version="1"><End Type="ZQM_O103_QUALITY_NOTIF_SRV.ItQnotifSel" Multiplicity="1" Role="FromRole_QnotifSel_Defects"/><End Type="ZQM_O103_QUALITY_NOTIF_SRV.ItDefects" Multiplicity="*" Role="ToRole_QnotifSel_Defects"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_QnotifSel_Defects"><PropertyRef Name="Qmnum"/></Principal>
+					<Dependent Role="ToRole_QnotifSel_Defects"><PropertyRef Name="Qmnum"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="ZQM_O103_QUALITY_NOTIF_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="ItQnotifSelSet" EntityType="ZQM_O103_QUALITY_NOTIF_SRV.ItQnotifSel" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="ItDefectsSet" EntityType="ZQM_O103_QUALITY_NOTIF_SRV.ItDefects" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="ItBatchesSet" EntityType="ZQM_O103_QUALITY_NOTIF_SRV.ItBatches" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+				<AssociationSet Name="QnotifSel_DefectsSet" Association="ZQM_O103_QUALITY_NOTIF_SRV.QnotifSel_Defects" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="ItQnotifSelSet" Role="FromRole_QnotifSel_Defects"/><End EntitySet="ItDefectsSet" Role="ToRole_QnotifSel_Defects"/></AssociationSet>
+				<AssociationSet Name="defects_batchesSet" Association="ZQM_O103_QUALITY_NOTIF_SRV.defects_batches" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="ItDefectsSet" Role="FromRole_defects_batches"/><End EntitySet="ItBatchesSet" Role="ToRole_defects_batches"/></AssociationSet>
+			</EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZQM_O103_QUALITY_NOTIF_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZQM_O103_QUALITY_NOTIF_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

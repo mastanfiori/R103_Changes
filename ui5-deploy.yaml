@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.4"
+metadata:
+  name: com.sugarcreek.R103_Quality_Notif
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          destination: SCP_DS4_400
+          url: http://s4hana.ds4:443
+        app:
+          name: ZCREAPP
+          description: create QN Batch
+          package: ZFIORIAPP
+          transport: DS4K906429

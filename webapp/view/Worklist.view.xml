@@ -1,0 +1,218 @@
+<mvc:View controllerName="com.sugarcreek.R103_Quality_Notif.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:core="sap.ui.core" xmlns:footerbar="sap.ushell.ui.footerbar"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable">
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
+		<semantic:titleHeading>
+			<Title id="_IDEGen_title0" text="{i18n>worklistTitle}" level="H2"/>
+		</semantic:titleHeading>
+		<!-- Header Content -->
+		<semantic:headerContent>
+			<smartFilterBar:SmartFilterBar id="smartFilterBar" smartVariant="__SVM01" useToolbar="false" entitySet="ItQnotifSelSet"
+				persistencyKey="com.itell.sugarcreek.view.FilterBar" assignedFiltersChanged="onAssignedFiltersChanged" showFilterConfiguration="true"
+				beforeVariantFetch="onVariantSave" afterVariantLoad="afterVariantSave" showClearOnFB="false" clear="onFilterBarClear" search="onSearch">
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration0" key="Werks" index="1" label="{i18n>Werks}" groupId="_BASIC"
+						width="300px" mandatory="notMandatory" visibleInAdvancedArea="true"></smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration1" key="Matnr" index="2" label="{i18n>Matnr}" groupId="_BASIC"
+						width="300px" mandatory="notMandatory" visibleInAdvancedArea="true"></smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration2" key="Erdat" index="3" label="{i18n>Erdat}" groupId="_BASIC"
+						width="300px" mandatory="notMandatory" visibleInAdvancedArea="true"
+						conditionType="{ module: 'sap.ui.comp.config.condition.DateRangeType', ignoreTime: false, operations: { filter: [ {path: 'category', contains: 'MONTH', exclude:true}, {path: 'category', contains: 'QUARTER', exclude:true}, {path: 'key', equals: 'TO', exclude:true} ] } }"></smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration3" key="Aufnr" index="4" label="{i18n>Aufnr}" groupId="_BASIC"
+						width="300px" mandatory="notMandatory" visibleInAdvancedArea="true"></smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration4" key="Qmart" index="5" label="{i18n>Qmart}" groupId="_BASIC"
+						width="300px" mandatory="notMandatory" visibleInAdvancedArea="true"></smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration5" key="checkbox" index="6" groupId="_BASIC1" mandatory="notMandatory"
+						visibleInAdvancedArea="true">
+						<smartFilterBar:customControl>
+							<CheckBox id="inspcheckbox" select="handleSelect"></CheckBox>
+						</smartFilterBar:customControl>
+					</smartFilterBar:ControlConfiguration>
+					<smartFilterBar:ControlConfiguration id="_IDEGen_controlconfiguration6" key="Prueflos" index="7" label="{i18n>tableInspectionLotTitle}"
+						groupId="_BASIC1" mandatory="notMandatory" visibleInAdvancedArea="true">
+						<smartFilterBar:customControl>
+							<Input id="inpsectionlot" required="false" enabled="false"></Input>
+						</smartFilterBar:customControl>
+					</smartFilterBar:ControlConfiguration>
+				</smartFilterBar:controlConfiguration>
+			</smartFilterBar:SmartFilterBar>
+		</semantic:headerContent>
+		<semantic:content>
+			<IconTabBar id="idIconTabBar" select=".onFilterSelect" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter id="_IDEGen_icontabfilter0" showAll="true" count="{/ItQnotifSelSet/Counts/Total}" text="All" key="All"/>
+					<IconTabSeparator id="_IDEGen_icontabseparator0"/>
+					<IconTabFilter id="_IDEGen_icontabfilter1" icon="sap-icon://clinical-tast-tracker" iconColor="Positive"
+						count="{/ItQnotifSelSet/Counts/Status/Ok}" text="Outstanding" key="Outstanding"/>
+					<IconTabFilter id="_IDEGen_icontabfilter2" icon="sap-icon://complete" iconColor="Critical" count="{/ItQnotifSelSet/Counts/Status/Heavy}"
+						text="Completed" key="Completed"/>
+					<IconTabFilter id="_IDEGen_icontabfilter3" icon="sap-icon://in-progress" iconColor="Negative"
+						count="{/ItQnotifSelSet/Counts/Status/Overweight}" text="InProcess" key="InProcess"/>
+					<IconTabFilter id="_IDEGen_icontabfilter4" icon="sap-icon://status-error" iconColor="Negative"
+						count="{/ItQnotifSelSet/Counts/Status/Overweight}" text="Postponed" key="Postponed"/>
+				</items>
+				<content>
+					<smartTable:SmartTable id="subPlanHeader" class="sapUiNoContentPadding" entitySet="ItQnotifSelSet" beforeRebindTable="onRebindTable"
+						tableType="ResponsiveTable" useExportToExcel="true" useTablePersonalisation="true" smartFilterId="smartFilterBar"
+						persistencyKey="com.itell.sugarcreek.view.SmartTable" enableAutoBinding="false" showVariantManagement="false" showRowCount="true"
+						requestAtLeastFields="Werks" ignoredFields=""
+						initiallyVisibleFields="Qmnum,Prueflos,Qmart,Status,Erdat,Aufnr,Matnr,Maktx,Losmenge,Mengeneinh">
+						<smartTable:customToolbar>
+							<OverflowToolbar id="_IDEGen_overflowtoolbar0" design="Transparent">
+								<ToolbarSpacer id="_IDEGen_toolbarspacer0"/>
+								<!--<Button text="{i18n>NewSubPlan}" press="onNewSubPlan" type="Transparent"/>-->
+							</OverflowToolbar>
+						</smartTable:customToolbar>
+						<!--initiallyVisibleFields="Qmnum,Prueflos,Werks,Qmart,Status,Erdat,Aufnr,Matnr,Maktx,Losmenge,Mengeneinh"
+						items="{ path: '/ItQnotifSelSet', sorter: { path: 'Qmnum', descending: false } }"-->
+						<!--<Table id="table" width="auto" items="{NotifListModel>/}"-->
+						<!--	noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"-->
+						<!--	updateFinished=".onUpdateFinished">-->
+						<!--	<headerToolbar>-->
+						<!--<OverflowToolbar>-->
+						<!--		<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>-->
+						<!--		<ToolbarSpacer/>-->
+						<!--		<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">-->
+						<!--			<layoutData>-->
+						<!--				<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>-->
+						<!--			</layoutData>-->
+						<!--		</SearchField>-->
+						<!--	</OverflowToolbar>-->
+						<!--	</headerToolbar>-->
+						<!--	<columns>-->
+						<!--		<Column id="Notification">-->
+						<!--			<Text text="{i18n>tableNotificationTitle}" id="NotificationTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="InspectionLot">-->
+						<!--			<Text text="{i18n>tableInspectionLotTitle}" id="InspectionLotTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="NotificationType">-->
+						<!--			<Text text="{i18n>tableNotificationTypeTitle}" id="NotificationTypeTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="NotificationStatus">-->
+						<!--			<Text text="{i18n>tableNotificationStatusTitle}" id="NotificationStatusTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="NotifCreatedOn">-->
+						<!--			<Text text="{i18n>tableNotifCreatedOnTitle}" id="NotifCreatedOnTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="ProductionOrder">-->
+						<!--			<Text text="{i18n>tableProductionOrderTitle}" id="ProductionOrderTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="Material">-->
+						<!--			<Text text="{i18n>tableMaterialTitle}" id="MaterialTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="MaterialDescription">-->
+						<!--			<Text text="{i18n>tableMaterialDescriptionTitle}" id="MaterialDescriptionTitle"/>-->
+						<!--		</Column>-->
+						<!--		<Column id="InspectionLotQuantity" hAlign="End">-->
+						<!--			<Text text="{i18n>tableInspectionLotQuantityTitle}" id="InspectionLotQuantityTitle"/>-->
+						<!--		</Column>-->
+						<!--	</columns>-->
+						<!--	<items>-->
+						<!--		<ColumnListItem type="Navigation" press=".onPress">-->
+						<!--			<cells>-->
+						<!--				<ObjectIdentifier title="{NotifListModel>Qmnum}"/>-->
+						<!--				<ObjectIdentifier text="{NotifListModel>Prueflos}"/>-->
+						<!--				<ObjectIdentifier text="{NotifListModel>Qmart}"/>-->
+						<!--				<ObjectIdentifier text="{NotifListModel>Status}"/>-->
+						<!--				<ObjectIdentifier text="{ path: 'NotifListModel>Erdat', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>-->
+						<!--				<ObjectIdentifier text="{NotifListModel>Aufnr}"/>-->
+						<!--				<ObjectIdentifier text="{path : 'NotifListModel>Matnr', type : 'sap.ui.model.odata.type.String', constraints: { isDigitSequence : true}}"/>-->
+						<!--				<ObjectIdentifier text="{NotifListModel>Maktx}"/>-->
+						<!--				<ObjectNumber number="{ path: 'NotifListModel>Losmenge', formatter: '.formatter.numberUnit' }" unit="{Mengeneinh}"/>-->
+						<!--			</cells>-->
+						<!--		</ColumnListItem>-->
+						<!--	</items>-->
+						<!--</Table>-->
+						<Table id="table" itemPress="onNavigation" alternateRowColors="true" growingThreshold="20" growing="true" growingScrollToLoad="true"
+							sticky="ColumnHeaders">
+							<columns>
+								<Column id="_IDEGen_column0">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata0" key="p13nData" value='\{"columnKey": "Qmnum","leadingProperty": "Qmnum", "columnIndex": "1"}'/>
+									</customData>
+									<Text id="_IDEGen_text0" text="{i18n>tableNotificationTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column1">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata1" key="p13nData"
+											value='\{"columnKey": "Prueflos","leadingProperty": "Prueflos", "columnIndex": "2"}'/>
+									</customData>
+									<Text id="_IDEGen_text1" text="{i18n>tableInspectionLotTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column2">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata2" key="p13nData" value='\{"columnKey": "Qmart","leadingProperty": "Qmart", "columnIndex": "3"}'/>
+									</customData>
+									<Text id="_IDEGen_text2" text="{i18n>tableNotificationTypeTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column3">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata3" key="p13nData" value='\{"columnKey": "Status","leadingProperty": "Status", "columnIndex": "4"}'/>
+									</customData>
+									<Text id="_IDEGen_text3" text="{i18n>tableNotificationStatusTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column4">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata4" key="p13nData" value='\{"columnKey": "Erdat","leadingProperty": "Erdat", "columnIndex": "5"}'/>
+									</customData>
+									<Text id="_IDEGen_text4" text="{i18n>tableNotifCreatedOnTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column5">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata5" key="p13nData" value='\{"columnKey": "Aufnr","leadingProperty": "Aufnr", "columnIndex": "6"}'/>
+									</customData>
+									<Text id="_IDEGen_text5" text="{i18n>tableProductionOrderTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column6">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata6" key="p13nData" value='\{"columnKey": "Matnr","leadingProperty": "Matnr", "columnIndex": "7"}'/>
+									</customData>
+									<Text id="_IDEGen_text6" text="{i18n>tableMaterialTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column7">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata7" key="p13nData" value='\{"columnKey": "Maktx","leadingProperty": "Maktx", "columnIndex": "8"}'/>
+									</customData>
+									<Text id="_IDEGen_text7" text="{i18n>tableMaterialDescriptionTitle}"></Text>
+								</Column>
+								<Column id="_IDEGen_column8">
+									<customData>
+										<core:CustomData id="_IDEGen_customdata8" key="p13nData"
+											value='\{"columnKey": "Losmenge","leadingProperty": "Losmenge", "columnIndex": "9"}'/>
+									</customData>
+									<Text id="_IDEGen_text8" text="{i18n>tableInspectionLotQuantityTitle}"></Text>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem id="_IDEGen_columnlistitem0" type="Navigation" press=".onPress">
+									<cells>
+										<ObjectIdentifier id="_IDEGen_objectidentifier0" title="{Qmnum}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier1" text="{Prueflos}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier2" text="{Qmart}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier3" text="{Status}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier4" text="{ path: 'Erdat', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier5" text="{Aufnr}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier6"
+											text="{path : 'Matnr', type : 'sap.ui.model.odata.type.String', constraints: { isDigitSequence : false}}"/>
+										<ObjectIdentifier id="_IDEGen_objectidentifier7" text="{Maktx}"/>
+										<ObjectNumber id="_IDEGen_objectnumber0" number="{ path: 'Losmenge', formatter: '.formatter.numberUnit' }" unit="{Mengeneinh}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</smartTable:SmartTable>
+				</content>
+			</IconTabBar>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press=".onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{worklistView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+	</semantic:SemanticPage>
+</mvc:View>

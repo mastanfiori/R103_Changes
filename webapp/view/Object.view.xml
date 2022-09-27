@@ -1,0 +1,166 @@
+<mvc:View controllerName="com.sugarcreek.R103_Quality_Notif.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:layout="sap.ui.layout">
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" showFooter="true">
+		<semantic:titleHeading>
+			<Title id="_IDEGen_title0" text="{headerData>/0/Qmnum}" level="H2"/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<layout:HorizontalLayout id="_IDEGen_horizontallayout0" allowWrapping="true">
+				<layout:VerticalLayout id="_IDEGen_verticallayout0" class="sapUiMediumMarginEnd">
+					<ObjectAttribute id="_IDEGen_objectattribute0" title="{i18n>tableInspectionLotTitle}" text="{headerData>/0/Prueflos}"/>
+					<ObjectAttribute id="_IDEGen_objectattribute1" title="{i18n>tableMaterialTitle}"
+						text="{path : 'headerData>/0/Matnr', type : 'sap.ui.model.odata.type.String', constraints: { isDigitSequence : false}}"/>
+					<ObjectAttribute id="_IDEGen_objectattribute2" title="{i18n>tableMaterialDescriptionTitle}" text="{headerData>/0/Maktx}"/>
+					<ObjectNumber id="_IDEGen_objectnumber0" number="{ path: 'headerData>/0/Losmenge', formatter: '.formatter.numberUnit' }"
+						unit="{headerData>/0/Mengeneinh}"/>
+				</layout:VerticalLayout>
+				<layout:VerticalLayout id="_IDEGen_verticallayout1" class="sapUiMediumMarginEnd">
+					<ObjectAttribute id="_IDEGen_objectattribute3" title="{i18n>tableNotificationTypeTitle}" text="{headerData>/0/Qmart}"/>
+					<ObjectAttribute id="_IDEGen_objectattribute4" title="{i18n>tableProductionOrderTitle}" text="{headerData>/0/Aufnr}"/>
+					<ObjectAttribute id="_IDEGen_objectattribute5" title="{i18n>Werks}" text="{headerData>/0/Werks}"/>
+					<!-- <ObjectAttribute id="_IDEGen_objectattribute6" title="{i18n>InspMat}" text="{headerData>/0/InspMat}"/> -->
+                    <ObjectAttribute id="_IDEGen_objectattribute6" title="{i18n>InspMat}" text="{headerData>/0/InspMat}" visible="false"/>
+                    <ObjectAttribute id="_IDEGen_objectattribute7" title="{i18n>Insppmat}" text="{headerData>/0/InspMat}" visible="false"/>                
+                </layout:VerticalLayout>
+			</layout:HorizontalLayout>
+		</semantic:headerContent>
+		<!-- Content -->
+		<semantic:content>
+			<layout:VerticalLayout id="_IDEGen_verticallayout2" class="sapUiMediumMarginEnd">
+				<Table id="iItDefectsSet" inset="false" items="{path:'defectData>/'}" class="sapFSemanticPageAlignContent" width="auto"
+					 mode="MultiSelect" selectionChange="onSelectChangeDef">
+					<!--changes to disable the message
+					-->
+					<headerToolbar>
+						<OverflowToolbar id="_IDEGen_overflowtoolbar0">
+							<Title id="defectTableHeader" text="{i18n>DefectItems}" level="H3"/>
+							<ToolbarSpacer id="_IDEGen_toolbarspacer0"/>
+							<Button id="_IDEGen_button0" text="Select Defects" visible="false" press="onPressDefects"></Button>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column id="_IDEGen_column0">
+							<Text id="_IDEGen_text0" text="{i18n>Posnr}"/>
+						</Column>
+						<Column id="_IDEGen_column1">
+							<Text id="_IDEGen_text1" text="{i18n>Fegrp}"/>
+						</Column>
+						<Column id="_IDEGen_column2">
+							<Text id="_IDEGen_text2" text="{i18n>Fecod}"/>
+						</Column>
+						<Column id="_IDEGen_column3">
+							<Text id="_IDEGen_text3" text="{i18n>Txtcdfe}"/>
+						</Column>
+						<Column id="_IDEGen_column4">
+							<Text id="_IDEGen_text4" text="{i18n>Ernam}"/>
+						</Column>
+						<Column id="_IDEGen_column5">
+							<Text id="_IDEGen_text5" text="{i18n>Erdat2}"/>
+						</Column>
+						<Column id="_IDEGen_column6">
+							<Text id="_IDEGen_text6" text="{i18n>Erzeit}"/>
+						</Column>
+						
+					</columns>
+					<items>
+						<ColumnListItem id="_IDEGen_columnlistitem0" vAlign="Middle">
+							<cells>
+								<Text id="_IDEGen_text7" text="{defectData>Posnr}"/>
+								<Text id="_IDEGen_text8" text="{defectData>Fegrp}"/>
+								<Text id="_IDEGen_text9" text="{defectData>Fecod}"/>
+								<Text id="_IDEGen_text10" text="{defectData>Txtcdfe}"/>
+								<Text id="_IDEGen_text11" text="{defectData>Ernam}"/>
+								<Text id="_IDEGen_text12" text="{path:'defectData>Erdat', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium',UTC:true}}"/>
+								<!--<Text text="{path:'Erzeit'}"/>-->
+								<Text id="_IDEGen_text13" text="{ path: 'defectData>Erzeit', type: 'sap.ui.model.odata.type.Time'}"/>
+								
+								<!--path:'Erzeit', type: 'sap.ui.model.type.Time', formatOptions: { style: 'medium'}}-->
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Table id="iItBatchesSet" items="{path:'batchData>/'}" class="sapFSemanticPageAlignContent" width="auto">
+					<headerToolbar>
+						<OverflowToolbar id="_IDEGen_overflowtoolbar1">
+							<Title id="batchTableHeader" text="{i18n>BatchSelection}" level="H3"/>
+							<ToolbarSpacer id="_IDEGen_toolbarspacer1"/>
+							<Button id="applydefId" visible="false" text="Apply Defects" press="onBatchPost"></Button>
+							<Button id="_IDEGen_button1" text="Back" press="onBackDefects"></Button>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column id="_IDEGen_column7" width="2rem">
+							<Text id="_IDEGen_text14"/>
+						</Column>
+						<Column id="_IDEGen_column8" width="7rem">
+							<Text id="_IDEGen_text15" text="{i18n>Charg}"/>
+						</Column>
+						<Column id="_IDEGen_column19" width="10rem">
+							<Text id="_IDEGen_text34" text="{i18n>Matnr}"/>
+						</Column>
+						<Column id="idcpudt">
+							<Text id="_IDEGen_text16" text="{i18n>Cpudt}"/>
+						</Column>
+						<Column id="_IDEGen_column10">
+							<Text id="_IDEGen_text17" text="{i18n>Clabs}"/>
+						</Column>
+						<Column id="_IDEGen_column11">
+							<Text id="_IDEGen_text18" text="{i18n>Ceinm}"/>
+						</Column>
+						<Column id="_IDEGen_column12" width="3rem">
+							<Text id="_IDEGen_text19" text="{i18n>Qmart}"/>
+						</Column>
+						<Column id="_IDEGen_column13">
+							<Text id="_IDEGen_text20" text="{i18n>Fegrp1}"/>
+						</Column>
+						<Column id="_IDEGen_column14">
+							<Text id="_IDEGen_text21" text="{i18n>Fecod1}"/>
+						</Column>
+						<Column id="_IDEGen_column15">
+							<Text id="_IDEGen_text22" text="{i18n>Fegrp2}"/>
+						</Column>
+						<Column id="_IDEGen_column16">
+							<Text id="_IDEGen_text23" text="{i18n>Fecod2}"/>
+						</Column>
+						<Column id="_IDEGen_column17" width="10rem">
+							<Text id="_IDEGen_text30" text="{i18n>Qmnum}"/>
+						</Column>
+						<Column id="_IDEGen_column18">
+							<Text id="_IDEGen_text32" text="{i18n>MulInd}"/>
+						</Column>
+						<Column id="_IDEGen_column70" visible="false">
+							<Text id="_IDEGen_text70" text="{i18n>QmnumO}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="_IDEGen_columnlistitem1" vAlign="Middle">
+							<cells>
+								<CheckBox id="idCheck" selected="{path:'batchData>RowSel'}" editable="{path:'batchData>Ceinm',formatter: '.formatter.check'}"/>
+								<Text id="_IDEGen_text24" text="{batchData>Charg}"/>
+								<Text id="_IDEGen_text35" text="{batchData>Matnr}"/>
+								<ObjectIdentifier id="_IDEGen_objectidentifier0"
+									title="{path:'batchData>Cpudt',type:'sap.ui.model.type.Date',formatOptions:{style:'medium',strictParsing: true,UTC:true}}"
+									text="{path:'batchData>Cputm',type:'sap.ui.model.odata.type.Time'}"/>
+								<Text id="_IDEGen_text25" text="{batchData>Clabs}"/>
+								<CheckBox id="_IDEGen_checkbox0" selected="{batchData>Ceinm}" editable="false"/>
+								<Input id="_IDEGen_input0" value="{batchData>Qmart}" editable="{path:'batchData>Mode',formatter: '.formatter.value'}"/>
+								<Text id="_IDEGen_text26" text="{batchData>Fegrp1}"/>
+								<Text id="_IDEGen_text27" text="{batchData>Fecod1}"/>
+								<Text id="_IDEGen_text28" text="{batchData>Fegrp2}"/>
+								<Text id="_IDEGen_text29" text="{batchData>Fecod2}"/>
+								<Link id="_IDEGen_text31" text="{batchData>Qmnum}" subtle="true" wrapping="false" press="handleQNLinkPress"/>
+								<Text id="_IDEGen_text33" text="{batchData>MulInd}"/>
+								<Text id="_IDEGen_text71" text="{defectData>QmnumO}" visible="false"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</layout:VerticalLayout>
+		</semantic:content>
+		<semantic:footerCustomActions>
+			<Button id="popover" icon="sap-icon://message-popup" text="{=${oXMLModel>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
+			<Button id="oExeidbtn" text="Execute" press="onExecute" visible="false"/>
+			<Button id="oCandbtn" text="Cancel"/>
+		</semantic:footerCustomActions>
+	</semantic:SemanticPage>
+</mvc:View>
