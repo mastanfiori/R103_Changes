@@ -21,52 +21,52 @@ sap.ui.define([
         /* lifecycle methods                                           */
         /* =========================================================== */
 
-		/**
-		 * Called when the worklist controller is instantiated.
-		 * @public
-		 */
+        /**
+         * Called when the worklist controller is instantiated.
+         * @public
+         */
         onInit: function () {
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
             // between the busy indication for loading the view's meta data
-			/*	var iOriginalBusyDelay,
-					oViewModel = new JSONModel({
-						busy: true,
-						delay: 0
-					});*/
+            /*	var iOriginalBusyDelay,
+                    oViewModel = new JSONModel({
+                        busy: true,
+                        delay: 0
+                    });*/
             var itemTabJSON = new sap.ui.model.json.JSONModel();
             this.getView().setModel(itemTabJSON, "TableModel");
             i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 
             // Store original busy indicator delay, so it can be restored later on
-			/*iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-			this.setModel(oViewModel, "objectView");*/
-			/*	this.getOwnerComponent().getModel().metadataLoaded().then(function () {
-					// Restore original busy indicator delay for the object view
-					oViewModel.setProperty("/delay", iOriginalBusyDelay);
-				});*/
+            /*iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
+            this.setModel(oViewModel, "objectView");*/
+            /*	this.getOwnerComponent().getModel().metadataLoaded().then(function () {
+                    // Restore original busy indicator delay for the object view
+                    oViewModel.setProperty("/delay", iOriginalBusyDelay);
+                });*/
         },
 
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */
 
-		/**
-		 * Event handler when the share in JAM button has been clicked
-		 * @public
+        /**
+         * Event handler when the share in JAM button has been clicked
+         * @public
 	
 
-		/* =========================================================== */
+        /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
 
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
-		 * @private
-		 */
+        /**
+         * Binds the view to the object path.
+         * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
+         * @private
+         */
         _onObjectMatched: function (oEvent) {
             //this.getView().byId("iItBatchesSet").setVisible(false);
             this.getView().byId("iItDefectsSet").removeSelections(true);
@@ -74,7 +74,7 @@ sap.ui.define([
             sPrdId = oEvent.getParameter("arguments").PRDId;
             /**** Changes by Mastan*/
             sInspection = oEvent.getParameter("arguments").INSlot;
-            debugger;
+            // debugger;
             var splitted = sInspection.split("", 2);
             var val1 = splitted[0];
             var val2 = splitted[1];
@@ -134,26 +134,26 @@ sap.ui.define([
 
             //App State
 
-			/*	var sHash = sap.ui.core.routing.HashChanger.getInstance().getHash();
-				if (sHash !== "undefined" && sHash !== "") {
-					var sAppStateKeys = /(?:sap-iapp-state=)([^&=]+)/.exec(sHash);
-					if (sAppStateKeys !== null) {
-						var sAppStateKey = sAppStateKeys[1];
-						sap.ushell.Container
-							.getService("CrossApplicationNavigation")
-							.getAppState(this.getOwnerComponent(), sAppStateKey)
-							.done(function (oSavedAppState) {
-								this.getView().getModel("TableModel").setData(oSavedAppState.getData());
-							}.bind(this));
-					}
-				}*/
-			/*	this.getModel().metadataLoaded().then(function () {
-					var sObjectPath = this.getModel().createKey("ItQnotifSelSet", {
-						Qmnum: sObjectId
-					});
-						
-					this._bindView("/" + sObjectPath);
-				}.bind(this));*/
+            /*	var sHash = sap.ui.core.routing.HashChanger.getInstance().getHash();
+                if (sHash !== "undefined" && sHash !== "") {
+                    var sAppStateKeys = /(?:sap-iapp-state=)([^&=]+)/.exec(sHash);
+                    if (sAppStateKeys !== null) {
+                        var sAppStateKey = sAppStateKeys[1];
+                        sap.ushell.Container
+                            .getService("CrossApplicationNavigation")
+                            .getAppState(this.getOwnerComponent(), sAppStateKey)
+                            .done(function (oSavedAppState) {
+                                this.getView().getModel("TableModel").setData(oSavedAppState.getData());
+                            }.bind(this));
+                    }
+                }*/
+            /*	this.getModel().metadataLoaded().then(function () {
+                    var sObjectPath = this.getModel().createKey("ItQnotifSelSet", {
+                        Qmnum: sObjectId
+                    });
+                    	
+                    this._bindView("/" + sObjectPath);
+                }.bind(this));*/
             //
         },
 
@@ -228,6 +228,7 @@ sap.ui.define([
         },
         onSelectChangeDef: function (oEvent) {
             this.getView().byId("applydefId").setVisible(true);
+            this.getView().byId("_IDEGen_button1").setVisible(true);
             // var path = this.getView().byId("iItDefectsSet").getSelectedContextPaths().length - 1;
             // if (path >= 2) {
             // 	//this.getView().byId("iItDefectsSet").removeSelections(true);
@@ -247,6 +248,8 @@ sap.ui.define([
                     var obj = {};
                     //var oPath = olength.length - 1;
                     var otabPath = this.getView().byId("iItDefectsSet").getSelectedContextPaths()[i].replace("/", "");
+                    obj.Posnr = this.byId("iItDefectsSet").getModel("defectData").getData()[otabPath].Posnr;
+
                     obj.Fegrp = this.byId("iItDefectsSet").getModel("defectData").getData()[otabPath].Fegrp;
                     obj.Fecod = this.byId("iItDefectsSet").getModel("defectData").getData()[otabPath].Fecod;
                     obj.Txtcdfe = this.byId("iItDefectsSet").getModel("defectData").getData()[otabPath].Txtcdfe;
@@ -278,9 +281,9 @@ sap.ui.define([
                     obj1.Qmart = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Qmart;
                     /********** Start Changes by Mastan */
                     obj1.Fegrp1 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fegrp1;
-					obj1.Fecod1 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fecod1;
-					obj1.Fegrp2 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fegrp2;
-					obj1.Fecod2 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fecod2;
+                    obj1.Fecod1 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fecod1;
+                    obj1.Fegrp2 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fegrp2;
+                    obj1.Fecod2 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fecod2;
                     /*********Mastan End */
                     //Material
                     obj1.Matnr = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Matnr;
@@ -293,6 +296,7 @@ sap.ui.define([
                     //	obj1.Qmnum = sObjectId;
                     //qm number
                     obj1.Qmnum = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Qmnum;
+                    obj1.Werks = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Werks;
                     arr1.push(obj1);
                 }
 
@@ -372,13 +376,37 @@ sap.ui.define([
                         this.oSuccess(Response);
                     }
                 }.bind(this),
+                //         error: function(){
+                //             MessageBox.error("Batch has inventory issue and cannot be processed");
+                //         }.bind(this),
+                //         async: true, // execute async request to not stuck the main thread
+                //         urlParameters: {} // send URL parameters if required
+                //     });
+                // },
+                /*******************Comented by Mastan */
                 error: function (error) {
+                    debugger;
+                    // var msg = error.message.value;
                     sap.ui.core.BusyIndicator.hide();
                     that.getView().byId("oExeidbtn").setVisible(true);
-                    this.oError(error);
-                }.bind(this),
-                async: true, // execute async request to not stuck the main thread
-                urlParameters: {} // send URL parameters if required 
+
+                    // // operationResult = "0";
+                    // var message = $(error.response.data).find('message').first().text();
+                    // // var errorObj1 = JSON.parse(error.response.body);
+                    // sap.m.MessageBox.show(
+                    //     errorObj1.error.message.value,
+                    //     sap.m.MessageBox.Icon.ERROR,
+                    //     "Error In Change Operation"
+                    // );
+
+
+                    // this.oError(error);
+
+                    //this.oError("Batch has inventory issue and cannot be processed")
+                    //    sap.m.MessageBox.error("Batch has inventory issue and cannot be processed");
+                }
+                // async: true, // execute async request to not stuck the main thread
+                // urlParameters: {} // send URL parameters if required 
             });
         },
         /*******************Comented by Mastan */
@@ -387,26 +415,46 @@ sap.ui.define([
         //     this.getView().byId("oExeidbtn").setVisible(false);
         //     MessageBox.success("Notification " + oMsg);
         // },
-/********************Start changes By Mastan */
+        /********************Start changes By Mastan */
         oSuccess: function (Response) {
-			var oMsg = Response.statusText;
-			this.getView().byId("oExeidbtn").setVisible(false);
-			MessageBox.success("Notification " + oMsg,{
-                actions: [sap.m.MessageBox.Action.OK],
-                onClose: function(oAction){
-                    if (oAction === sap.m.MessageBox.Action.OK){
+            var oMsg = Response.statusText;
+            this.getView().byId("idCheck").setEditable(false);
+            this.getView().byId("oExeidbtn").setVisible(false);
+            MessageBox.success("Notification " + oMsg + "   Do you want to send Email.", {
+                actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                onClose: function (oAction) {
+                    if (oAction === sap.m.MessageBox.Action.YES) {
+                       
+                        debugger;
+                        var yes ="YES";
+                        this.oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZQM_O103_QUALITY_NOTIF_SRV", true);
+                        this.oModel.read("/ItEmailSet(Email='" + yes + "')", {
+
+                            success: function (oData, response) {
+                                //	sap.ui.core.BusyIndicator.hide();
+                                MessageBox.success("Email Sent Succesfully");
+                            }.bind(this),
+                            error: function (error) {
+                                sap.m.MessageBox.error("Notification type is not maintained in the Table");
+                                	sap.ui.core.BusyIndicator.hide();
+                            }
+
+                        });
+                        // location.reload();
+                    }
+                    else {
                         location.reload();
                     }
                 }
             });
-		},       
-/***************End by Mastan */ 
+        },
+        /***************End by Mastan */
         oError: function (error) {
             var that = this;
             sap.ui.core.BusyIndicator.hide();
             that.getView().byId("popover").setVisible(true);
             if (error.statusCode === 500) {
-                MessageBox.error(i18n.getText("INTERERROR"));
+                MessageBox.error(i18n.getText("Batch has inventory issue and cannot be processed"));
             } else {
                 if (error.statusCode === 504) {
                     MessageBox.error(i18n.getText("TIMEERROR"));
@@ -483,66 +531,66 @@ sap.ui.define([
             //this.getView().byId("iItBatchesSet").setVisible(false);
         },
 
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {string} sObjectPath path to the object to be bound
-		 * @private
-		 */
-		/*	_bindView: function (sObjectPath) {
-				var oViewModel = this.getModel("objectView"),
-					oDataModel = this.getModel();
+        /**
+         * Binds the view to the object path.
+         * @function
+         * @param {string} sObjectPath path to the object to be bound
+         * @private
+         */
+        /*	_bindView: function (sObjectPath) {
+                var oViewModel = this.getModel("objectView"),
+                    oDataModel = this.getModel();
 
-				this.getView().bindElement({
-					path: sObjectPath,
-					events: {
-						change: this._onBindingChange.bind(this),
-						dataRequested: function () {
-							oDataModel.metadataLoaded().then(function () {
-								// Busy indicator on view should only be set if metadata is loaded,
-								// otherwise there may be two busy indications next to each other on the
-								// screen. This happens because route matched handler already calls '_bindView'
-								// while metadata is loaded.
-								oViewModel.setProperty("/busy", true);
-							});
-						},
-						dataReceived: function () {
-							oViewModel.setProperty("/busy", false);
-						}
-					}
-				});
-			},*/
+                this.getView().bindElement({
+                    path: sObjectPath,
+                    events: {
+                        change: this._onBindingChange.bind(this),
+                        dataRequested: function () {
+                            oDataModel.metadataLoaded().then(function () {
+                                // Busy indicator on view should only be set if metadata is loaded,
+                                // otherwise there may be two busy indications next to each other on the
+                                // screen. This happens because route matched handler already calls '_bindView'
+                                // while metadata is loaded.
+                                oViewModel.setProperty("/busy", true);
+                            });
+                        },
+                        dataReceived: function () {
+                            oViewModel.setProperty("/busy", false);
+                        }
+                    }
+                });
+            },*/
 
         _onBindingChange: function () {
-			/*var oView = this.getView(),
-				oViewModel = this.getModel("objectView"),
-				oElementBinding = oView.getElementBinding();
+            /*var oView = this.getView(),
+                oViewModel = this.getModel("objectView"),
+                oElementBinding = oView.getElementBinding();
 
-			// No data for the binding
-			if (!oElementBinding.getBoundContext()) {
-				this.getRouter().getTargets().display("objectNotFound");
-				return;
-			}
+            // No data for the binding
+            if (!oElementBinding.getBoundContext()) {
+                this.getRouter().getTargets().display("objectNotFound");
+                return;
+            }
 
-			var oResourceBundle = this.getResourceBundle(),
-				oObject = oView.getBindingContext().getObject(),
-				sObjectId = oObject.Qmnum,
-				sObjectName = oObject.Qmnum;
+            var oResourceBundle = this.getResourceBundle(),
+                oObject = oView.getBindingContext().getObject(),
+                sObjectId = oObject.Qmnum,
+                sObjectName = oObject.Qmnum;
 
-			oViewModel.setProperty("/busy", false);
-			// Add the object page to the flp routing history
-			this.addHistoryEntry({
-				title: this.getResourceBundle().getText("objectTitle") + " - " + sObjectName,
-				icon: "sap-icon://enter-more",
-				intent: "#QualityNotificationWithReference-display&/ItQnotifSelSet/" + sObjectId
-			});
+            oViewModel.setProperty("/busy", false);
+            // Add the object page to the flp routing history
+            this.addHistoryEntry({
+                title: this.getResourceBundle().getText("objectTitle") + " - " + sObjectName,
+                icon: "sap-icon://enter-more",
+                intent: "#QualityNotificationWithReference-display&/ItQnotifSelSet/" + sObjectId
+            });
 
-			oViewModel.setProperty("/saveAsTileTitle", oResourceBundle.getText("saveAsTileTitle", [sObjectName]));
-			oViewModel.setProperty("/shareOnJamTitle", sObjectName);
-			oViewModel.setProperty("/shareSendEmailSubject",
-				oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
-			oViewModel.setProperty("/shareSendEmailMessage",
-				oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));*/
+            oViewModel.setProperty("/saveAsTileTitle", oResourceBundle.getText("saveAsTileTitle", [sObjectName]));
+            oViewModel.setProperty("/shareOnJamTitle", sObjectName);
+            oViewModel.setProperty("/shareSendEmailSubject",
+                oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
+            oViewModel.setProperty("/shareSendEmailMessage",
+                oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));*/
         }
 
     });
