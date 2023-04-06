@@ -334,7 +334,8 @@ sap.ui.define([
                     obj1.Cputm = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Cputm;
                     obj1.Clabs = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Clabs;
                     obj1.Ceinm = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Ceinm;
-                    obj1.Qmart = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Qmart;
+                     var input= this.byId("iItBatchesSet").getModel("batchData").getData()[j].Qmart;
+                     obj1.Qmart = input.toUpperCase();
                     obj1.Fegrp1 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fegrp1;
                     obj1.Fecod1 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fecod1;
                     obj1.Fegrp2 = this.byId("iItBatchesSet").getModel("batchData").getData()[j].Fegrp2;
@@ -373,7 +374,7 @@ sap.ui.define([
                     this.getView().setModel(JsonModel, "batchData");
                     this.getView().byId("iItBatchesSet").setModel(JsonModel);
                     if (flag === true) {
-                        this.oSuccess(Response);
+                        this.oSuccess(Response, that);
                     }
                 }.bind(this),
                 //         error: function(){
@@ -385,7 +386,7 @@ sap.ui.define([
                 // },
                 /*******************Comented by Mastan */
                 error: function (error) {
-                    debugger;
+                    // debugger;
                     // var msg = error.message.value;
                     sap.ui.core.BusyIndicator.hide();
                     that.getView().byId("oExeidbtn").setVisible(true);
@@ -416,27 +417,48 @@ sap.ui.define([
         //     MessageBox.success("Notification " + oMsg);
         // },
         /********************Start changes By Mastan */
-        oSuccess: function (Response) {
+        oSuccess: function (Response , that) {
             var oMsg = Response.statusText;
             this.getView().byId("idCheck").setEditable(false);
             this.getView().byId("oExeidbtn").setVisible(false);
             MessageBox.success("Notification " + oMsg + "   Do you want to send Email.", {
-                actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                actions: [sap.m.MessageBox.Action.YES],
                 onClose: function (oAction) {
                     if (oAction === sap.m.MessageBox.Action.YES) {
                        
-                        debugger;
+                        // debugger;
                         var yes ="YES";
-                        this.oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZQM_O103_QUALITY_NOTIF_SRV", true);
-                        this.oModel.read("/ItEmailSet(Email='" + yes + "')", {
+                        // this.oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZQM_O103_QUALITY_NOTIF_SRV", true);
+                        that.getOwnerComponent().getModel().read("/ItEmailSet(Email='" + yes + "')", {
 
                             success: function (oData, response) {
                                 //	sap.ui.core.BusyIndicator.hide();
-                                MessageBox.success("Email Sent Succesfully");
-                            }.bind(this),
-                            error: function (error) {
-                                sap.m.MessageBox.error("Notification type is not maintained in the Table");
-                                	sap.ui.core.BusyIndicator.hide();
+                                MessageBox.success("Email Sent Succesfully",{
+                                    actions: [sap.m.MessageBox.Action.OK],
+                                    onClose: function (oAction) {
+                                        if (oAction === sap.m.MessageBox.Action.OK) {
+                                            location.reload();
+                                        }
+                                        }
+                                });
+                            }.bind(that),
+                            error: function (error, response) {
+                                // debugger;
+                                // this.getOwnerComponent().getModel().attachRequestFailed(
+                                //     this.component._oErrorHandler._requestFailedHandler,
+                                //     this.component._oErrorHandler);
+                                sap.ui.core.BusyIndicator.hide();
+                                // var message = jQuery.parseJSON(response.responseText).error.message.value;
+                                // sap.m.MessageBox.information("Notification type is not maintained in the Table",{
+                                //     // sap.m.MessageBox.alert(message,{
+                                // actions: [sap.m.MessageBox.Action.OK],
+                                //     onClose: function (oAction) {
+                                //         if (oAction === sap.m.MessageBox.Action.OK) {
+                                //             location.reload();
+                                //         }
+                                //         }
+                                // });
+                                	
                             }
 
                         });
@@ -448,6 +470,14 @@ sap.ui.define([
                 }
             });
         },
+
+        // getErrorMessage: function(response) {
+
+        //     var message = jQuery.parseJSON(response.responseText).error.message.value;
+            
+        //     return message;
+            
+        //     },
         /***************End by Mastan */
         oError: function (error) {
             var that = this;
