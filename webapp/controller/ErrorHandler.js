@@ -64,10 +64,10 @@ sap.ui.define([
 //                 }
 //Added by Mastan // end
 
-
+debugger;
                 $.each(aMessages, function (e, r) {
-                    debugger;
-                    if (r.code === "/IWBEP/CX_MGW_BUSI_EXCEPTION" || r.code === "/IWBEP/CX_MGW_TECH_EXCEPTION") {
+                    // debugger;
+                    if (r === undefined || r.code === "/IWBEP/CX_MGW_BUSI_EXCEPTION" || r.code === "/IWBEP/CX_MGW_TECH_EXCEPTION") {
                         aMessages.splice(e, 1);
                     } else {
                         msgArr.push(r.message);
@@ -106,8 +106,46 @@ sap.ui.define([
          */
         _showServiceError : function (sErrorTitle, sDetails) {
             this._bMessageOpen = true;
-            
-            var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";            MessageBox.error(
+            if(sDetails[0] === "Please maintain notification type F3 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type F2 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type F1 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type Q1 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type Q2 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type Q3 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type Z3 using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type ZA using ZQM_EMAIL_QM01" ||
+            sDetails[0] === "Please maintain notification type ZP using ZQM_EMAIL_QM01" ){
+                // MessageBox.information(sDetails[0],{
+                //     actions: [sap.m.MessageBox.Action.OK],
+                //     onClose: function (oAction) {
+                //         if (oAction === sap.m.MessageBox.Action.OK) {
+                //             location.reload();
+                //         }
+                //         }             
+                //        });
+
+                MessageBox.information(
+                    sErrorTitle,
+                    {
+                        id : "serviceErrorMessageBox1",
+                        details: sDetails,
+                        styleClass: sResponsivePaddingClasses, //this._oComponent.getContentDensityClass(),
+                        actions: [MessageBox.Action.CLOSE],
+                        onClose: function (oAction) {
+                            this._bMessageOpen = false;
+                            if (oAction === sap.m.MessageBox.Action.CLOSE){
+                                location.reload();
+    
+                            }
+                        }.bind(this)
+                    }        
+                );
+
+            }
+
+            else{
+                var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";            
+            MessageBox.error(
                 sErrorTitle,
                 {
                     id : "serviceErrorMessageBox",
@@ -121,9 +159,10 @@ sap.ui.define([
 
                         }
                     }.bind(this)
-                }
-            
+                }        
             );
+            }
+            
         }
     });
 });
