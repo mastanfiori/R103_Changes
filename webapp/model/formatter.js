@@ -23,12 +23,15 @@ sap.ui.define([], function () {
 			}
 
 		},
-		check: function (v) {
-			if (v === true) {
+		check: function (v,valuess,batch) {
+			if (v === true || valuess !== "" || batch === "0.000") {
 				return false;
-			} else if (v === false) {
+			} else if (v === false && valuess === "" && batch !== "0.000") {
 				return true;
-			} else if (v === null) {
+			} else if (v === null && valuess !== "" && batch !== "0.000") {
+				return false;
+			}
+			else if(v === false && valuess === "" && batch === "0.000"){
 				return false;
 			}
 		},
