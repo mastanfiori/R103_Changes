@@ -85,7 +85,7 @@
 							<Title id="batchTableHeader" text="{i18n>BatchSelection}" level="H3"/>
 							<ToolbarSpacer id="_IDEGen_toolbarspacer1"/>
 							<Button id="applydefId" visible="false" text="Apply Defects" press="onBatchPost"></Button>
-							<Button id="_IDEGen_button1" text="Back" press="onBackDefects"></Button>
+							<Button id="_IDEGen_button1"  visible="false" text="Cancel" press="onBackDefects"></Button>
 						</OverflowToolbar>
 					</headerToolbar>
 					<columns>
@@ -131,11 +131,15 @@
 						<Column id="_IDEGen_column70" visible="false">
 							<Text id="_IDEGen_text70" text="{i18n>QmnumO}"/>
 						</Column>
+                        <Column id="_IDEGen_column711">
+							<Text id="_IDEGen_text78" text="{i18n>Werks}"/>
+						</Column>
 					</columns>
 					<items>
 						<ColumnListItem id="_IDEGen_columnlistitem1" vAlign="Middle">
 							<cells>
-								<CheckBox id="idCheck" selected="{path:'batchData>RowSel'}" editable="{path:'batchData>Ceinm',formatter: '.formatter.check'}"/>
+								<!-- <CheckBox id="idCheck" selected="{path:'batchData>RowSel'}" editable="{path:'batchData>Ceinm',formatter: '.formatter.check'}"/> -->
+								<CheckBox id="idCheck" selected="{path:'batchData>RowSel'}" editable="{parts:[{path: 'batchData>Ceinm'},   {path: 'batchData>Qmnum'}, {path: 'batchData>Clabs'}],formatter: '.formatter.check' }"/>
 								<Text id="_IDEGen_text24" text="{batchData>Charg}"/>
 								<Text id="_IDEGen_text35" text="{batchData>Matnr}"/>
 								<ObjectIdentifier id="_IDEGen_objectidentifier0"
@@ -143,7 +147,7 @@
 									text="{path:'batchData>Cputm',type:'sap.ui.model.odata.type.Time'}"/>
 								<Text id="_IDEGen_text25" text="{batchData>Clabs}"/>
 								<CheckBox id="_IDEGen_checkbox0" selected="{batchData>Ceinm}" editable="false"/>
-								<Input id="_IDEGen_input0" value="{batchData>Qmart}" editable="{path:'batchData>Mode',formatter: '.formatter.value'}"/>
+								<Input id="_IDEGen_input0" value="{batchData>Qmart}" editable="{path:'batchData>Mode',formatter: '.formatter.value'}" class="text-uppercase"/>
 								<Text id="_IDEGen_text26" text="{batchData>Fegrp1}"/>
 								<Text id="_IDEGen_text27" text="{batchData>Fecod1}"/>
 								<Text id="_IDEGen_text28" text="{batchData>Fegrp2}"/>
@@ -151,6 +155,7 @@
 								<Link id="_IDEGen_text31" text="{batchData>Qmnum}" subtle="true" wrapping="false" press="handleQNLinkPress"/>
 								<Text id="_IDEGen_text33" text="{batchData>MulInd}"/>
 								<Text id="_IDEGen_text71" text="{defectData>QmnumO}" visible="false"/>
+                                <Text id="_IDEGen_text77" text="{batchData>Werks}"/>
 							</cells>
 						</ColumnListItem>
 					</items>
@@ -160,7 +165,7 @@
 		<semantic:footerCustomActions>
 			<Button id="popover" icon="sap-icon://message-popup" text="{=${oXMLModel>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
 			<Button id="oExeidbtn" text="Execute" press="onExecute" visible="false"/>
-			<Button id="oCandbtn" text="Cancel"/>
+			<!-- <Button id="oCandbtn" text="Cancel"/> -->
 		</semantic:footerCustomActions>
 	</semantic:SemanticPage>
 </mvc:View>
